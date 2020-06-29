@@ -75,7 +75,7 @@
         {
             $rooms = EloquentBuilder::to(Room::class, $request->input('filter'))
                 ->with(['category', 'hotel', 'reservations'])
-                ->get();
+                ->paginate();
 
             return RoomsResource::collection($rooms)->response();
         }
