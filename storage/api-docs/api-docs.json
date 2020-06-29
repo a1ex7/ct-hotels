@@ -1,0 +1,952 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Hotels API",
+        "description": "Hotels API documentation",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1"
+        }
+    ],
+    "paths": {
+        "/hotels": {
+            "get": {
+                "tags": [
+                    "Hotels"
+                ],
+                "summary": "Display a listing of the hotels",
+                "description": "Returns list of all hotels",
+                "operationId": "App\\Http\\Controllers\\HotelsController::index",
+                "parameters": [
+                    {
+                        "name": "filter[rating]",
+                        "in": "query",
+                        "description": "Filter hotels by rating",
+                        "required": false,
+                        "example": "5"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Hotels"
+                ],
+                "summary": "Store new hotel",
+                "description": "Returns hotel data",
+                "operationId": "storeHotel",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateHotelRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Hotel"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/hotels/{hotel}": {
+            "get": {
+                "tags": [
+                    "Hotels"
+                ],
+                "summary": "Get hotel by id",
+                "description": "Get hotel by id",
+                "operationId": "App\\Http\\Controllers\\HotelsController::show",
+                "parameters": [
+                    {
+                        "name": "hotel",
+                        "in": "path",
+                        "description": "Hotel id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display the specified resource"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    },
+                    "404": {
+                        "description": "Hotel is not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Hotels"
+                ],
+                "summary": "Update existing hotel",
+                "description": "Returns updated hotel data",
+                "operationId": "updateHotel",
+                "parameters": [
+                    {
+                        "name": "hotel",
+                        "in": "path",
+                        "description": "Hotel id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateHotelRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Hotel"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Hotels"
+                ],
+                "summary": "Delete existing hotel",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteHotel",
+                "parameters": [
+                    {
+                        "name": "hotel",
+                        "in": "path",
+                        "description": "Hotel id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/reservations": {
+            "get": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Display a listing of the reservations",
+                "description": "Returns list of all reservations",
+                "operationId": "App\\Http\\Controllers\\ReservationsController::index",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Store new reservation",
+                "description": "Returns reservation data",
+                "operationId": "storeReservation",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateReservationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Reservation"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/reservations/{reservation}": {
+            "get": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Get reservation by id",
+                "description": "Get reservation by id",
+                "operationId": "App\\Http\\Controllers\\ReservationsController::show",
+                "parameters": [
+                    {
+                        "name": "reservation",
+                        "in": "path",
+                        "description": "Reservation id",
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display the specified resource"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    },
+                    "404": {
+                        "description": "Reservation is not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Update existing reservation",
+                "description": "Returns updated reservation data",
+                "operationId": "updateReservation",
+                "parameters": [
+                    {
+                        "name": "reservation",
+                        "in": "path",
+                        "description": "Reservation id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateReservationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Reservation"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Delete existing reservation",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteReservation",
+                "parameters": [
+                    {
+                        "name": "reservation",
+                        "in": "path",
+                        "description": "Reservation id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/rooms": {
+            "get": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Display a listing of the rooms",
+                "description": "Returns list of all rooms",
+                "operationId": "App\\Http\\Controllers\\RoomsController::index",
+                "parameters": [
+                    {
+                        "name": "filter[capacity]",
+                        "in": "query",
+                        "description": "Filter rooms by capacity",
+                        "required": false,
+                        "example": "4"
+                    },
+                    {
+                        "name": "filter[category]",
+                        "in": "query",
+                        "description": "Filter rooms by category",
+                        "required": false,
+                        "example": "1"
+                    },
+                    {
+                        "name": "filter[hotel]",
+                        "in": "query",
+                        "description": "Filter rooms by hotel",
+                        "required": false,
+                        "example": "1"
+                    },
+                    {
+                        "name": "filter[booking][start]",
+                        "in": "query",
+                        "description": "Start booking rooms date",
+                        "required": false,
+                        "example": "2020-06-24"
+                    },
+                    {
+                        "name": "filter[booking][end]",
+                        "in": "query",
+                        "description": "End booking rooms date",
+                        "required": false,
+                        "example": "2020-06-30"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Store new room",
+                "description": "Returns room data",
+                "operationId": "storeRoom",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateRoomRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/rooms/{room}": {
+            "get": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Get room by id",
+                "description": "Get room by id",
+                "operationId": "App\\Http\\Controllers\\RoomsController::show",
+                "parameters": [
+                    {
+                        "name": "room",
+                        "in": "path",
+                        "description": "Room id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display the specified resource"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    },
+                    "404": {
+                        "description": "Room is not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Update existing room",
+                "description": "Returns updated room data",
+                "operationId": "updateRoom",
+                "parameters": [
+                    {
+                        "name": "room",
+                        "in": "path",
+                        "description": "Room id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateRoomRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Delete existing room",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteRoom",
+                "parameters": [
+                    {
+                        "name": "room",
+                        "in": "path",
+                        "description": "Room id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateHotelRequest": {
+                "title": "Create Hotel request",
+                "description": "Create Hotel request body data",
+                "required": [
+                    "name",
+                    "rating"
+                ],
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "hotels"
+                            },
+                            "attributes": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the hotel",
+                                        "type": "string",
+                                        "example": "Some SPA Resort"
+                                    },
+                                    "rating": {
+                                        "description": "Rating of the hotel",
+                                        "type": "integer",
+                                        "example": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateHotelRequest": {
+                "title": "Update Hotel request",
+                "description": "Update Hotel request body data",
+                "required": [
+                    "name",
+                    "rating"
+                ],
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "1"
+                            },
+                            "type": {
+                                "type": "string",
+                                "example": "hotels"
+                            },
+                            "attributes": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the hotel",
+                                        "type": "string",
+                                        "example": "Some SPA Resort"
+                                    },
+                                    "rating": {
+                                        "description": "Rating of the hotel",
+                                        "type": "integer",
+                                        "example": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "CreateReservationRequest": {
+                "title": "Create Reservation request",
+                "description": "Create Reservation request body data",
+                "required": [
+                    "name",
+                    "phone",
+                    "persons",
+                    "arrival",
+                    "departure",
+                    "room_id"
+                ],
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "reservations"
+                            },
+                            "attributes": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Client's name",
+                                        "type": "string",
+                                        "example": "Alex Core"
+                                    },
+                                    "phone": {
+                                        "description": "Client's phone",
+                                        "type": "string",
+                                        "example": "(050) 123-45-67"
+                                    },
+                                    "persons": {
+                                        "description": "Number of peoples",
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "arrival": {
+                                        "description": "Clietn arrival date",
+                                        "type": "integer",
+                                        "example": "2020-07-06 12:00"
+                                    },
+                                    "departure": {
+                                        "description": "Clietn departure date",
+                                        "type": "integer",
+                                        "example": "2020-07-12 14:00"
+                                    },
+                                    "room_id": {
+                                        "description": "Reservation room id",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateReservationRequest": {
+                "title": "Update Reservation request",
+                "description": "Update Reservation request body data",
+                "required": [
+                    "name",
+                    "phone",
+                    "persons",
+                    "arrival",
+                    "departure",
+                    "room_id"
+                ],
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "1"
+                            },
+                            "type": {
+                                "type": "string",
+                                "example": "reservations"
+                            },
+                            "attributes": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Client's name",
+                                        "type": "string",
+                                        "example": "Alex Core"
+                                    },
+                                    "phone": {
+                                        "description": "Client's phone",
+                                        "type": "string",
+                                        "example": "(050) 123-45-67"
+                                    },
+                                    "persons": {
+                                        "description": "Number of peoples",
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "arrival": {
+                                        "description": "Clietn arrival date",
+                                        "type": "integer",
+                                        "example": "2020-07-06 12:00"
+                                    },
+                                    "departure": {
+                                        "description": "Clietn departure date",
+                                        "type": "integer",
+                                        "example": "2020-07-12 14:00"
+                                    },
+                                    "room_id": {
+                                        "description": "Reservation room id",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "CreateRoomRequest": {
+                "title": "Create Room request",
+                "description": "Create Room request body data",
+                "required": [
+                    "number",
+                    "capacity",
+                    "category_id",
+                    "hotel_id"
+                ],
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "rooms"
+                            },
+                            "attributes": {
+                                "properties": {
+                                    "number": {
+                                        "description": "Room number",
+                                        "type": "string",
+                                        "example": "138B"
+                                    },
+                                    "capacity": {
+                                        "description": "Capacity of the room",
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "category_id": {
+                                        "description": "Room category id",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "hotel_id": {
+                                        "description": "Room hotel id",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateRoomRequest": {
+                "title": "Update Room request",
+                "description": "Update Room request body data",
+                "required": [
+                    "number",
+                    "capacity",
+                    "category_id",
+                    "hotel_id"
+                ],
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "1"
+                            },
+                            "type": {
+                                "type": "string",
+                                "example": "rooms"
+                            },
+                            "attributes": {
+                                "properties": {
+                                    "number": {
+                                        "description": "Room number",
+                                        "type": "string",
+                                        "example": "138B"
+                                    },
+                                    "capacity": {
+                                        "description": "Capacity of the room",
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "category_id": {
+                                        "description": "Room category id",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "hotel_id": {
+                                        "description": "Room hotel id",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Hotel": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "rating": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Reservation": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "persons": {
+                        "type": "integer"
+                    },
+                    "arrival": {
+                        "type": "date"
+                    },
+                    "departure": {
+                        "type": "date"
+                    },
+                    "room_id": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Room": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "number": {
+                        "type": "string"
+                    },
+                    "capacity": {
+                        "type": "integer"
+                    },
+                    "category_id": {
+                        "type": "integer"
+                    },
+                    "hotel_id": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
