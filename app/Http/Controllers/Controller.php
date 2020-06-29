@@ -1,13 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
+    use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+    use Illuminate\Foundation\Bus\DispatchesJobs;
+    use Illuminate\Foundation\Validation\ValidatesRequests;
+    use Illuminate\Routing\Controller as BaseController;
 
-class Controller extends BaseController
-{
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-}
+    /**
+     * @OA\Info(
+     *     title="Hotels API",
+     *     description="Hotels API documentation",
+     *     version="1.0.0"
+     *   )
+     */
+    class Controller extends BaseController
+    {
+        use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    }
