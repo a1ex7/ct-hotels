@@ -1,13 +1,42 @@
-# Hotels
+## Hotels
 
+### Install
 
-## Install
+```
+git clone https://github.com/a1ex7/ct-hotels.git
+cd ct-hotels
+cp .env.example .env
+docker-compose up -d --build
+docker-compose exec app composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### App init
 
-## API
+```
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate --seed
+```
 
+### App container shell
+```
+docker-compose exec app bash
+```
 
-## TEST
+### API
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Generate documentation
+```
+docker-compose exec app php artisan l5-swagger:generate
+```
+then go to
+http://localhost/api/documentation
+
+### TEST
+
+```
+docker-compose exec app php artisan test
+```
+or
+```
+docker-compose exec app ./vendor/bin/phpunit
+```
